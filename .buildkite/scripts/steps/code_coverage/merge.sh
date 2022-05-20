@@ -68,6 +68,6 @@ listReports() {
 finalReplace() {
   echo "### KIBANA_DIR in finalReplace fn: $KIBANA_DIR"
 #  TODO-TRE: Drop hardcoded replacement anchor
-  sed -ie "s|LEETRE|${KIBANA_DIR}|g" /Users/tre/main/target/kibana-coverage/functional/*.json
+  sed -ie "s|LEETRE|${KIBANA_DIR}|g" "$KIBANA_DIR/target/kibana-coverage/functional/*.json"
 #  sed -i '' -e "s|TREZKIBANADIR|/Users/tre/main|g" /Users/tre/main/target/kibana-coverage/functional/*.json
 }
