@@ -36,12 +36,12 @@ echo "--- collect VCS Info"
 .buildkite/scripts/steps/code_coverage/reporting/collectVcsInfo.sh
 
 echo "--- Jest: merging coverage files and generating the final combined report"
-dirListing "target/dir-listing-jest-just-regex-replace.txt" target/kibana-coverage/jest
-#  TODO-TRE: Drop hardcoded replacement anchor
-replacePaths "$KIBANA_DIR/target/kibana-coverage/jest"
-dirListing "target/dir-listing-jest-after-sed.txt" target/kibana-coverage/jest
+dirListing "target/dir-listing-jest-just-before-final-replace.txt" target/kibana-coverage/jest
+echo "--- Final replace for jest"
+replacePaths target/kibana-coverage/jest
+dirListing "target/dir-listing-jest-after-final-replace.txt" target/kibana-coverage/jest
 yarn nyc report --nycrc-path src/dev/code_coverage/nyc_config/nyc.jest.config.js
-dirListing "target/dir-listing-jest-after-report--merge.txt" target/kibana-coverage/jest
+dirListing "target/dir-listing-jest-after-report-merge.txt" target/kibana-coverage/jest
 
 echo "--- Functional: merging json files and generating the final combined report"
 
@@ -50,11 +50,13 @@ echo "--- Functional: merging json files and generating the final combined repor
 # current source absolute path
 
 set +e
+echo "--- Final replace for functional"
 replacePaths target/kibana-coverage/functional
-# TODO-TRE: Should use the next line..I think..check later.
-#replacePaths target/kibana-coverage/jest
+dirListing "target/dir-listing-functional-after-final-replace.txt" target/kibana-coverage/functional
 splitCoverage target/kibana-coverage/functional
+dirListing "target/dir-listing-functional-after-splitCoverage.txt" target/kibana-coverage/functional
 splitMerge
+dirListing "target/dir-listing-functional-after-splitMerge.txt" target/kibana-coverage/functional
 set -e
 
 # archive reports to upload as build artifacts
