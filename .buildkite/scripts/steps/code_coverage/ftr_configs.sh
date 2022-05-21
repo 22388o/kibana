@@ -121,12 +121,6 @@ fi
 
 dirListing "target/dir-listing-post-merge.txt" target/kibana-coverage/functional
 
-replacePaths() {
-  for x in $(ls "$1"); do
-    echo "### KIBANA_DIR: $KIBANA_DIR"
-    node .buildkite/scripts/steps/code_coverage/clean_coverage_paths.js "$1/$x"
-  done
-}
 echo "--- Replace paths OUTSIDE OF configs loop, FOR FUNCTIONAL COVERAGE"
 replacePaths "$KIBANA_DIR/target/kibana-coverage/functional"
 
