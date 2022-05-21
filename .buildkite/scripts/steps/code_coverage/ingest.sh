@@ -4,6 +4,7 @@ set -euo pipefail
 
 source .buildkite/scripts/common/util.sh
 source .buildkite/scripts/steps/code_coverage/util.sh
+source .buildkite/scripts/steps/code_coverage/merge.sh
 
 export CODE_COVERAGE=1
 echo "--- Reading Kibana stats cluster creds from vault"
@@ -33,8 +34,6 @@ echo "--- process HTML Links"
 
 echo "--- collect VCS Info"
 .buildkite/scripts/steps/code_coverage/reporting/collectVcsInfo.sh
-
-source .buildkite/scripts/steps/code_coverage/merge.sh
 
 echo "--- Jest: merging coverage files and generating the final combined report"
 #  TODO-TRE: Drop hardcoded replacement anchor
