@@ -36,9 +36,9 @@ echo "--- collect VCS Info"
 .buildkite/scripts/steps/code_coverage/reporting/collectVcsInfo.sh
 
 echo "--- Jest: merging coverage files and generating the final combined report"
-dirListing "target/dir-listing-jest-just-before-sed.txt" target/kibana-coverage/jest
+dirListing "target/dir-listing-jest-just-regex-replace.txt" target/kibana-coverage/jest
 #  TODO-TRE: Drop hardcoded replacement anchor
-sed -ie "s|LEETRE|${KIBANA_DIR}|g" "$KIBANA_DIR/target/kibana-coverage/jest/*.json"
+replacePaths "$KIBANA_DIR/target/kibana-coverage/jest"
 dirListing "target/dir-listing-jest-after-sed.txt" target/kibana-coverage/jest
 yarn nyc report --nycrc-path src/dev/code_coverage/nyc_config/nyc.jest.config.js
 dirListing "target/dir-listing-jest-after-report--merge.txt" target/kibana-coverage/jest
