@@ -41,7 +41,7 @@ echo "--- Final replace for jest"
 replacePaths target/kibana-coverage/jest
 dirListing "target/dir-listing-jest-after-final-replace.txt" target/kibana-coverage/jest
 yarn nyc report --nycrc-path src/dev/code_coverage/nyc_config/nyc.jest.config.js
-dirListing "target/dir-listing-jest-after-report-merge.txt" target/kibana-coverage/jest
+dirListing "target/dir-listing-jest-after-report-merge.txt" target/kibana-coverage/jest-combined
 
 echo "--- Functional: merging json files and generating the final combined report"
 
@@ -56,7 +56,7 @@ dirListing "target/dir-listing-functional-after-final-replace.txt" target/kibana
 splitCoverage target/kibana-coverage/functional
 dirListing "target/dir-listing-functional-after-splitCoverage.txt" target/kibana-coverage/functional
 splitMerge
-dirListing "target/dir-listing-functional-after-splitMerge.txt" target/kibana-coverage/functional
+dirListing "target/dir-listing-functional-combined-after-splitMerge.txt" target/kibana-coverage/functional-combined
 set -e
 
 # archive reports to upload as build artifacts
