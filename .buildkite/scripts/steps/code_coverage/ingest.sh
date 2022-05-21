@@ -3,6 +3,7 @@
 set -euo pipefail
 
 source .buildkite/scripts/common/util.sh
+source .buildkite/scripts/steps/code_coverage/util.sh
 
 export CODE_COVERAGE=1
 echo "--- Reading Kibana stats cluster creds from vault"
@@ -23,10 +24,7 @@ echo "--- Upload new git sha"
 echo "--- Download coverage arctifacts"
 buildkite-agent artifact download target/kibana-coverage/jest/* .
 
-jestDirs="target/dir-listing-jest.txt"
-pwd > $jestDirs
-ls -l target/kibana-coverage/jest >>"$jestDirs"
-buildkite-agent artifact upload "$jestDirs"
+dirListing "target/dir-listing-jest.txt" target/kibana-coverage/jest
 
 buildkite-agent artifact download target/kibana-coverage/functional/* .
 
