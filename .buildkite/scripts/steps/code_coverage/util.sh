@@ -3,7 +3,7 @@
 set -euo pipefail
 
 # $1 file name, ex: "target/dir-listing-jest.txt"
-# $2 directory to be listed (ls -la DIR), ex: target/kibana-coverage/jest
+# $2 directory to be listed, ex: target/kibana-coverage/jest
 dirListing() {
   local fileName=$1
   local dir=$2
