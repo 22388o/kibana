@@ -25,7 +25,7 @@ buildkite-agent artifact download target/kibana-coverage/jest/* .
 
 jestDirs="target/dir-listing-jest.txt"
 pwd > $jestDirs
-ls -l target/kibana-coverage/jest >>"jestDirs"
+ls -l target/kibana-coverage/jest >>"$jestDirs"
 buildkite-agent artifact upload "$jestDirs"
 
 buildkite-agent artifact download target/kibana-coverage/functional/* .
