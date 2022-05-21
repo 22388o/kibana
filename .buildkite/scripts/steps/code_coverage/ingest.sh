@@ -50,7 +50,9 @@ echo "--- Functional: merging json files and generating the final combined repor
 # current source absolute path
 
 set +e
-finalReplace
+replacePaths target/kibana-coverage/functional
+# TODO-TRE: Should use the next line..I think..check later.
+#replacePaths target/kibana-coverage/jest
 splitCoverage target/kibana-coverage/functional
 splitMerge
 set -e
