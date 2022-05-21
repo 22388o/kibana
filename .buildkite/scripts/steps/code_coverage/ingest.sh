@@ -36,9 +36,12 @@ echo "--- collect VCS Info"
 .buildkite/scripts/steps/code_coverage/reporting/collectVcsInfo.sh
 
 echo "--- Jest: merging coverage files and generating the final combined report"
+dirListing "target/dir-listing-jest-just-before-sed.txt" target/kibana-coverage/jest
 #  TODO-TRE: Drop hardcoded replacement anchor
-#sed -ie "s|LEETRE|${KIBANA_DIR}|g" "$KIBANA_DIR/target/kibana-coverage/jest/*.json"
-#yarn nyc report --nycrc-path src/dev/code_coverage/nyc_config/nyc.jest.config.js
+sed -ie "s|LEETRE|${KIBANA_DIR}|g" "$KIBANA_DIR/target/kibana-coverage/jest/*.json"
+dirListing "target/dir-listing-jest-after-sed.txt" target/kibana-coverage/jest
+yarn nyc report --nycrc-path src/dev/code_coverage/nyc_config/nyc.jest.config.js
+dirListing "target/dir-listing-jest-after-report--merge.txt" target/kibana-coverage/jest
 
 echo "--- Functional: merging json files and generating the final combined report"
 
@@ -54,9 +57,9 @@ set -e
 
 # archive reports to upload as build artifacts
 echo "--- Archive and upload combined reports"
-#tar -czf target/kibana-coverage/jest/kibana-jest-coverage.tar.gz target/kibana-coverage/jest-combined
+tar -czf target/kibana-coverage/jest/kibana-jest-coverage.tar.gz target/kibana-coverage/jest-combined
 tar -czf target/kibana-coverage/functional/kibana-functional-coverage.tar.gz target/kibana-coverage/functional-combined
-#buildkite-agent artifact upload 'target/kibana-coverage/jest/kibana-jest-coverage.tar.gz'
+buildkite-agent artifact upload 'target/kibana-coverage/jest/kibana-jest-coverage.tar.gz'
 buildkite-agent artifact upload 'target/kibana-coverage/functional/kibana-functional-coverage.tar.gz'
 
 echo "--- Upload coverage static site"
