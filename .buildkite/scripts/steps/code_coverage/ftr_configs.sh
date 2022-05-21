@@ -3,6 +3,7 @@
 set -euo pipefail
 
 source .buildkite/scripts/common/util.sh
+source .buildkite/scripts/steps/code_coverage/util.sh
 
 export CODE_COVERAGE=1 # Kibana is bootstrapped differently for code coverage
 echo "--- Print KIBANA_DIR"
@@ -100,14 +101,11 @@ while read -r config; do
     fi
   fi
 
-  dirInLoop="target/dir-listing-$dasherized.txt"
-  ls -l target/kibana-coverage/functional >"$dirInLoop"
-  buildkite-agent artifact upload "$dirInLoop"
+  dirListing "target/dir-listing-$dasherized.txt" target/kibana-coverage/functional
 done <<<"$configs"
 
-postLoop="target/dir-listing-post-loop.txt"
-ls -l target/kibana-coverage/functional >"$postLoop"
-buildkite-agent artifact upload "$postLoop"
+dirListing "target/dir-listing-post-loop.txt" target/kibana-coverage/functional
+
 # Each browser unload event, creates a new coverage file.
 # So, we merge them here.
 if [[ -d "$KIBANA_DIR/target/kibana-coverage/functional" ]]; then
@@ -121,12 +119,10 @@ else
   echo "--- Code coverage not found in: $KIBANA_DIR/target/kibana-coverage/functional"
 fi
 
-postMerge="target/dir-listing-post-merge.txt"
-ls -l target/kibana-coverage/functional >"$postMerge"
-buildkite-agent artifact upload "$postMerge"
+dirListing "target/dir-listing-post-merge.txt" target/kibana-coverage/functional
 
 replacePaths() {
-  for x in $(ls $1); do
+  for x in $(ls "$1"); do
     echo "### KIBANA_DIR: $KIBANA_DIR"
     node .buildkite/scripts/steps/code_coverage/clean_coverage_paths.js "$1/$x"
   done
