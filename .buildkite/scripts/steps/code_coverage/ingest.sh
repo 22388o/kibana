@@ -51,12 +51,15 @@ echo "--- Functional: merging json files and generating the final combined repor
 
 set +e
 echo "--- Final replace for functional"
+fileHeads "target/file-heads-functional-before-final-replace.txt" target/kibana-coverage/functional
 replacePaths target/kibana-coverage/functional
+fileHeads "target/file-heads-functional-after-final-replace.txt" target/kibana-coverage/functional
 dirListing "target/dir-listing-functional-after-final-replace.txt" target/kibana-coverage/functional
 splitCoverage target/kibana-coverage/functional
 dirListing "target/dir-listing-functional-after-splitCoverage.txt" target/kibana-coverage/functional
 splitMerge
 dirListing "target/dir-listing-functional-combined-after-splitMerge.txt" target/kibana-coverage/functional-combined
+fileHeads "target/file-heads-functional-combined-after-splitMerge.txt" target/kibana-coverage/functional-combined
 set -e
 
 # archive reports to upload as build artifacts

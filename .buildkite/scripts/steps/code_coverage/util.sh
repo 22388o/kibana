@@ -21,3 +21,18 @@ replacePaths() {
     node .buildkite/scripts/steps/code_coverage/clean_coverage_paths.js "$1/$x"
   done
 }
+
+fileHeads() {
+  local fileName=$1
+  local dir=$2
+
+  echo "" >"$fileName"
+
+  while read -r x; do
+    printf "\n### BEGIN %s\n\n" "$x" >>"$fileName"
+    head -2 "$x" >>"$fileName"
+    printf "\n### END %s\n\n" "$x" >>"$fileName"
+  done <<<"$(find "$dir" -maxdepth 1 -type f -name '*.json')"
+
+  buildkite-agent artifact upload "$fileName"
+}
