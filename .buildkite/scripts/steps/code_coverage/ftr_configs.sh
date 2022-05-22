@@ -104,7 +104,8 @@ while read -r config; do
   dirListing "target/dir-listing-$dasherized.txt" target/kibana-coverage/functional
 done <<<"$configs"
 
-dirListing "target/dir-listing-post-loop.txt" target/kibana-coverage/functional
+dirListing "target/dir-listing-functional-post-loop.txt" target/kibana-coverage/functional
+fileHeads "target/file-heads-functional-post-loop.txt" target/kibana-coverage/functional
 
 # Each browser unload event, creates a new coverage file.
 # So, we merge them here.
@@ -120,9 +121,11 @@ else
 fi
 
 dirListing "target/dir-listing-post-merge.txt" target/kibana-coverage/functional
+fileHeads "target/file-heads-functional-post-merge-before-replace.txt" target/kibana-coverage/functional
 
 echo "--- Replace paths OUTSIDE OF configs loop, FOR FUNCTIONAL COVERAGE"
 replacePaths "$KIBANA_DIR/target/kibana-coverage/functional"
+fileHeads "target/file-heads-functional-after-replace.txt" target/kibana-coverage/functional
 
 if [[ "$failedConfigs" ]]; then
   buildkite-agent meta-data set "$FAILED_CONFIGS_KEY" "$failedConfigs"
