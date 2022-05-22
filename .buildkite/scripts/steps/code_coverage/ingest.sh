@@ -28,6 +28,8 @@ buildkite-agent artifact download target/kibana-coverage/jest/* .
 dirListing "target/dir-listing-jest.txt" target/kibana-coverage/jest
 
 buildkite-agent artifact download target/kibana-coverage/functional/* .
+dirListing "target/dir-listing-functional-after-download.txt" target/kibana-coverage/functional
+fileHeads "target/file-heads-functional-after-download.txt" target/kibana-coverage/functional
 
 echo "--- process HTML Links"
 .buildkite/scripts/steps/code_coverage/reporting/prokLinks.sh
@@ -55,8 +57,10 @@ fileHeads "target/file-heads-functional-before-final-replace.txt" target/kibana-
 replacePaths target/kibana-coverage/functional
 fileHeads "target/file-heads-functional-after-final-replace.txt" target/kibana-coverage/functional
 dirListing "target/dir-listing-functional-after-final-replace.txt" target/kibana-coverage/functional
+
 splitCoverage target/kibana-coverage/functional
 dirListing "target/dir-listing-functional-after-splitCoverage.txt" target/kibana-coverage/functional
+# splitMerge drops its result into: target/kibana-coverage/functional-combined
 splitMerge
 dirListing "target/dir-listing-functional-combined-after-splitMerge.txt" target/kibana-coverage/functional-combined
 fileHeads "target/file-heads-functional-combined-after-splitMerge.txt" target/kibana-coverage/functional-combined

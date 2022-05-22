@@ -120,7 +120,7 @@ else
   echo "--- Code coverage not found in: $KIBANA_DIR/target/kibana-coverage/functional"
 fi
 
-dirListing "target/dir-listing-post-merge.txt" target/kibana-coverage/functional
+dirListing "target/dir-listing-functional-post-merge.txt" target/kibana-coverage/functional
 fileHeads "target/file-heads-functional-post-merge-before-replace.txt" target/kibana-coverage/functional
 
 echo "--- Replace paths OUTSIDE OF configs loop, FOR FUNCTIONAL COVERAGE"

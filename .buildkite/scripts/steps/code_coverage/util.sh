@@ -12,6 +12,7 @@ dirListing() {
 
   printf "\n### %s \n\tlisted to: %s\n" "$dir" "$fileName"
   buildkite-agent artifact upload "$fileName"
+
   printf "\n### %s Uploaded\n" "$fileName"
 }
 
@@ -44,4 +45,6 @@ fileHeads() {
   done <<<"$(find "$dir" -maxdepth 1 -type f -name '*.json')"
 
   buildkite-agent artifact upload "$fileName"
+
+  printf "\n### %s Uploaded\n" "$fileName"
 }
