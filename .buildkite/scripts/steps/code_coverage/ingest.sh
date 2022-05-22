@@ -51,13 +51,19 @@ echo "--- Functional: merging json files and generating the final combined repor
 # KIBANA_DIR of the final merge worker so that the merge works: so they point to the
 # current source absolute path
 
+
 set +e
 echo "--- Final replace for functional"
 fileHeads "target/file-heads-functional-before-final-replace.txt" target/kibana-coverage/functional
+collect target/collect-functional-before-final-replace.tar.gz target/kibana-coverage/functional
+
 replacePaths target/kibana-coverage/functional
+
+collect target/collect-functional-after-final-replace.tar.gz target/kibana-coverage/functional
 fileHeads "target/file-heads-functional-after-final-replace.txt" target/kibana-coverage/functional
 dirListing "target/dir-listing-functional-after-final-replace.txt" target/kibana-coverage/functional
 
+echo "--- Begin Split and Merge"
 splitCoverage target/kibana-coverage/functional
 dirListing "target/dir-listing-functional-after-splitCoverage.txt" target/kibana-coverage/functional
 # splitMerge drops its result into: target/kibana-coverage/functional-combined
@@ -65,6 +71,7 @@ splitMerge
 dirListing "target/dir-listing-functional-combined-after-splitMerge.txt" target/kibana-coverage/functional-combined
 fileHeads "target/file-heads-functional-combined-after-splitMerge.txt" target/kibana-coverage/functional-combined
 set -e
+
 
 # archive reports to upload as build artifacts
 echo "--- Archive and upload combined reports"

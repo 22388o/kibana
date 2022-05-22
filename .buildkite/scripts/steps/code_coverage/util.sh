@@ -48,3 +48,14 @@ fileHeads() {
 
   printf "\n### %s Uploaded\n" "$fileName"
 }
+
+collect () {
+  local fileName=$1
+  local dir=$2
+
+  tar -czf "$fileName" "$dir"
+
+  buildkite-agent artifact upload "$fileName"
+
+  printf "\n### %s Uploaded\n" "$fileName"
+}
