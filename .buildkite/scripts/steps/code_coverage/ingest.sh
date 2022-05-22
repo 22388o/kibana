@@ -13,6 +13,9 @@ export PASS_FROM_VAULT="$(retry 5 5 vault read -field=password secret/kibana-iss
 export HOST_FROM_VAULT="$(retry 5 5 vault read -field=host secret/kibana-issues/prod/coverage/elasticsearch)"
 export TIME_STAMP=$(date +"%Y-%m-%dT%H:%M:00Z")
 
+echo "--- Print KIBANA_DIR"
+echo "### KIBANA_DIR: $KIBANA_DIR"
+
 echo "--- Download previous git sha"
 .buildkite/scripts/steps/code_coverage/reporting/downloadPrevSha.sh
 previousSha=$(cat downloaded_previous.txt)
@@ -57,7 +60,9 @@ echo "--- Final replace for functional"
 fileHeads "target/file-heads-functional-before-final-replace.txt" target/kibana-coverage/functional
 collect target/collect-functional-before-final-replace.tar.gz target/kibana-coverage/functional
 
-replacePaths target/kibana-coverage/functional
+#replacePaths target/kibana-coverage/functional
+echo "### KIBANA_DIR: $KIBANA_DIR"
+sed -ie "s|LEETRE|${KIBANA_DIR}|g" target/kibana-coverage/functional/*.json
 
 collect target/collect-functional-after-final-replace.tar.gz target/kibana-coverage/functional
 fileHeads "target/file-heads-functional-after-final-replace.txt" target/kibana-coverage/functional
