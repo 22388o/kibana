@@ -22,11 +22,20 @@ replacePaths() {
   done
 }
 
+header() {
+  local fileName=$1
+
+  echo "" >"$fileName"
+
+  echo "### File Name:" >>"$fileName"
+  printf "\t%s\n" "$fileName" >>"$fileName"
+}
+
 fileHeads() {
   local fileName=$1
   local dir=$2
 
-  echo "" >"$fileName"
+  header "$fileName"
 
   while read -r x; do
     printf "\n### BEGIN %s\n\n" "$x" >>"$fileName"
