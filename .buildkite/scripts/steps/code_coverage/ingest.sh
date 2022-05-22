@@ -50,11 +50,6 @@ dirListing "target/dir-listing-jest-after-report-merge.txt" target/kibana-covera
 
 echo "--- Functional: merging json files and generating the final combined report"
 
-# TODO-TRE: When we do the FINAL MERGE, we may need replace our anchor (LEETRE) to the
-# KIBANA_DIR of the final merge worker so that the merge works: so they point to the
-# current source absolute path
-
-
 set +e
 echo "--- Final replace for functional"
 fileHeads "target/file-heads-functional-before-final-replace.txt" target/kibana-coverage/functional
