@@ -16,7 +16,15 @@ emptyCheck() {
 guardIngestion () {
  for x in functional jest; do
    local COVERAGE_SUMMARY_FILE="target/kibana-coverage/${x}-combined/coverage-summary.json"
-   emptyCheck $COVERAGE_SUMMARY_FILE
+
+   if [[ -e "$COVERAGE_SUMMARY_FILE" ]]; then
+      emptyCheck "$COVERAGE_SUMMARY_FILE"
+   else
+     printf "### %s does not exist, FAIL the build\n" "$COVERAGE_SUMMARY_FILE"
+     echo "### Perhaps the path is incorrect?"
+     echo "### KIBANA_DIR: $KIBANA_DIR"
+     exit 11
+   fi
  done
 
  if [[ ${#empties[@]} -ge $emptiesFailureThreshold ]]; then
