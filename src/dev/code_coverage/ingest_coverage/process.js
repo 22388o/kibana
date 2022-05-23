@@ -83,8 +83,6 @@ const vcsInfoLines$ = (vcsInfoFilePath) => {
 
 export const prok = ({ jsonSummaryPath, vcsInfoFilePath, teamAssignmentsPath }, log) => {
   validateRoot(COVERAGE_INGESTION_KIBANA_ROOT, log);
-  console.log(`\n### (process) Processing jsonSummaryPath: \n\t${jsonSummaryPath}`);
-  log.info(`\n### (process) Processing jsonSummaryPath: \n\t${jsonSummaryPath}`);
 
   const xformWithPath = transform(jsonSummaryPath)(log); // On complete
 

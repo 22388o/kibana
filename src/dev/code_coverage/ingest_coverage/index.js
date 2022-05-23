@@ -32,7 +32,6 @@ export function runCoverageIngestionCli() {
       const vcsInfoFilePath = resolveRoot(flags.vcsInfoPath);
       const teamAssignmentsPath = resolveRoot(flags.teamAssignmentsPath);
 
-      console.log(`\n### (index) Processing jsonSummaryPath: \n\t${jsonSummaryPath}`);
       log.info(`\n### (index) Processing jsonSummaryPath: \n\t${jsonSummaryPath}`);
 
       pathExists(jsonSummaryPath)
